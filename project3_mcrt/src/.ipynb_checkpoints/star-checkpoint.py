@@ -1,6 +1,6 @@
 
 class Star:
-    def __init__(self, mass, Z=0.02, id=None):
+    def __init__(self, mass, Z=0.02):
         """
         Initialize ZAMS star.
         
@@ -39,8 +39,7 @@ class Star:
 
         self.t_eff = ((self.luminosity)**(0.25) * self.radius**(-0.5)) * cons.T_sun        
 
-        self.id = id
-        
+        self.id = None
         self.x = 0.0
         self.y = 0.0
         self.z = 0.0

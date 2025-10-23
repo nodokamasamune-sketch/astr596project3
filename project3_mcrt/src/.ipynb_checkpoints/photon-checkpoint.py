@@ -1,12 +1,6 @@
-#photon generation: same # photons per band
-#star generation weighted by luminosity
-#photon luminosity = total luminosity (in band) / # of photons
-#each band calculated seperately
-
-#FIND SOME WAY TO UPDATE POSITION OF PHOTON
 
 class Photon:
-    def __init__(self, total_luminosity, n, band):
+    def __init__(self, star, band):
         """
         Initialize photon packet.
         
@@ -36,8 +30,8 @@ class Photon:
         
         
         # luminosity carried
-    
-        self.L_photon = total_luminosity[band] / n
+        N = 1 # number of photon packets
+        self.L = 
 
         # band
         self.band = band
@@ -58,23 +52,7 @@ class Photon:
         distance : float
             Distance to move (cm)
         """
-        
-        x = self.x
-        y = self.y
-        z = self.z
-
-        x_dir = self.x_dir
-        y_dir = self.y_dir
-        z_dir = self.z_dir
-
-        new_x = x + x_dir * distance
-        new_y = y + y_dir * distance
-        new_z = z + z_dir * distance
-        
-        return new_x, new_y, new_z
-
-        
-
+        pass
 
 def emit_packet_from_star(star, band, L_packet):
     """
@@ -157,9 +135,6 @@ def distance_to_next_boundary(packet, grid):
         x_edge = grid.x_min + ix * grid.dx
         dx = (x_edge - x) / x_dir
         face_x = 'x_min'
-    else x_dir == 0:
-        dx = np.inf
-        face_x = 'inf'
 
     # Compute distance to next y-boundary
     if y_dir > 0:
@@ -170,9 +145,6 @@ def distance_to_next_boundary(packet, grid):
         y_edge = grid.y_min + iy * grid.dy
         dy = (y_edge - y) / y_dir
         face_y = 'y_min'
-    else y_dir == 0:
-        dy = np.inf
-        face_y = 'inf'
 
 
     # Compute distance to next z-boundary
@@ -184,9 +156,7 @@ def distance_to_next_boundary(packet, grid):
         z_edge = grid.z_min + iz * grid.dz
         dz = (z_edge - z) / z_dir
         face_z = 'z_min'
-    else z_dir == 0:
-        dz = np.inf
-        face_z = 'inf'
+
 
     # Determine minimum distance
     distances = [dx, dy, dz]
@@ -198,7 +168,8 @@ def distance_to_next_boundary(packet, grid):
 
     
 
-def propagate_packet(photon, grid):
+
+def propagate_packet(packet, grid):
     """
     Propagate packet through grid until absorbed or escaped.
     
@@ -214,43 +185,4 @@ def propagate_packet(photon, grid):
     location : tuple
         (ix, iy, iz) if absorbed, (x, y, z) if escaped
     """
-    
-    #calculate tau
-    #calculate tau_accumulated
-    #compare at every cell boundary
-    
-    # create sample optical depth
-    d = np.random.uniform(0, 1)
-    tau_sample = - np.ln(d)
-    
-    # calculate tau_accumulated
-    tau_accumulated = 0
-
-    # get kappa
-    kappa = kappa
-
-    # get rho_dust
-    rho_dust = rho_dust
-
-    while tau_accumulated == 0:
-        inside = grid.is_inside(photon.x, photon.y, photon.z)
-
-        if inside == False:
-            loc = np.array([photon.x, photon.y, photon.z])
-            return 'escaped', loc
-
-        if inside == True:
-            # calculate del_s
-            del_s, face = distance_to_next_boundary(photon, grid)            
-            
-            # calculate new tau_acc
-            del_tau = kappa * rho_dust * del_s
-            tau_accumulated = tau_accumulated + del_tau
-
-            # move photon
-            x, y, z = photon.move(del_s)
-    
-    else:
-        ix, iy, iz = grid.get_cell_indices(photon.x, photon.y, photon.z)
-        loc = np.array([ix, iy, iz])
-        return 'absorbed', loc
+    pass
